@@ -5,15 +5,19 @@ export default class Tweets extends Component {
 
     render() {
         return (
-            <div class='container mt-5'>
-                <div class="card bg-dark text-white">
-                    <div class="card-body">
-                        <blockquote class="blockquote mb-0">
-                            <p>{this.props.message}</p>
-                            <footer class="blockquote-footer">{this.props.author}</footer>
-                        </blockquote>
+            <div className='mt-5 mb-5'>
+                {this.props.messages.map((message, index) => 
+                    <div className='container mt-2' key={index}>
+                    <div className="card bg-dark text-white">
+                        <div className="card-body">
+                            <blockquote className="blockquote mb-0">
+                                <p>{message.message}</p>
+                                <footer className="blockquote-footer">{message.author}</footer>
+                            </blockquote>
+                        </div>
                     </div>
                 </div>
+                )}
             </div>
         );
     }
