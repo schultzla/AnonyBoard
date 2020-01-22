@@ -66,6 +66,7 @@ export default class Search extends Component {
             .then(data => data.json())
             .then(results => {
                 allMessages.push(...results)
+                allMessages.sort((a, b) => (a.time > b.time ? 1 : -1))
                 this.setState({ messages: allMessages})
             })
             .catch(error => console.log(error))

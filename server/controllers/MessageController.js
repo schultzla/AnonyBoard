@@ -1,6 +1,6 @@
 var db = require('../index');
-const { body } = require('express-validator/check');
-const { validationResult } = require('express-validator/check');
+const { body } = require('express-validator');
+const { validationResult } = require('express-validator');
 
 exports.message_list = function(req, res) {
     db.Message.find({})
