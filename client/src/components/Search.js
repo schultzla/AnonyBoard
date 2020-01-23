@@ -64,7 +64,7 @@ export default class Search extends Component {
     }
 
     onEnter = event => {
-        if (event.keyCode === 13 && event.shiftKey === false) {
+        if (event.keyCode === 13 && event.shiftKey === false && !this.state.error) {
             event.preventDefault();
             this.addMessage();
         }
@@ -74,7 +74,6 @@ export default class Search extends Component {
         if (this.state.authorError != null || this.state.messageError != null) {
             return;
         }
-        event.preventDefault();
         this.capMessages();
         fetch('/api/v1/messages', {
             method: 'POST',
