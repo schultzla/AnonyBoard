@@ -9,5 +9,6 @@ messagesRouter.route('/')
 
 messagesRouter.route('/:id')
     .get(message_controller.get_message)
+    .delete(message_controller.delete_message)
 
 module.exports = messagesRouter;

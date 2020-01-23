@@ -20,6 +20,16 @@ exports.get_message = function(req, res) {
   .catch(function(err) {
     res.json(err)
   })
+};
+
+exports.delete_message = function(req, res) {
+  db.Message.deleteOne({_id: req.params.id})
+  .then(function(dbMessage) {
+    res.json(dbMessage)
+  })
+  .catch(function(err) {
+    res.json(err)
+  }) 
 }
 
 exports.create_messsage = function(req, res, next) {
@@ -41,16 +51,14 @@ exports.create_messsage = function(req, res, next) {
     } catch(err) {
       return next(err)
     }
-  }
+  };
 
 exports.validate = (method) => {
     switch (method) {
       case 'create_message': {
         console.log('validating new message')
        return [ 
-          body('message', 'message is too long').isLength({max: 140}),
-          body('likes', 'likes should be 0').custom(value => value === 0),
-          body('dislikes', 'dislikes should be 0').custom(value => value === 0)
+          body('message', 'message is too long').isLength({max: 140})
          ]   
       }
     }

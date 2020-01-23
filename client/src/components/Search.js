@@ -25,7 +25,7 @@ export default class Search extends Component {
                 <input type='text' ref={el => this.inputAuthor = el} onChange={this.updateAuthor} className={`border-0 bg-dark text-white form-control mb-2 ${this.state.authorError ? 'is-invalid' : ''}`} placeholder='Username (Optional)'></input>
                 <div className='invalid-feedback'>{this.state.authorError}</div>
 
-                <textarea ref={el => this.inputMessage = el} onChange={this.updateMessage} className={`border-0 bg-dark text-white form-control ${this.state.messageError ? 'is-invalid' : ''}`} type='text' rows='5' resize='none' placeholder='Message'></textarea>
+                <textarea ref={el => this.inputMessage = el} onChange={this.updateMessage} onKeyDown={this.onEnter} className={`border-0 bg-dark text-white form-control ${this.state.messageError ? 'is-invalid' : ''}`} type='text' rows='5' resize='none' placeholder='Message'></textarea>
                 <div className='invalid-feedback'>{this.state.messageError}</div>
 
                 <button type="button" onMouseUp={this.addMessage} className="mt-2 btn btn-primary btn-sm">Submit</button>
@@ -34,14 +34,21 @@ export default class Search extends Component {
         );
     }
 
+    onEnter = event => {
+        if (event.keyCode === 13 && event.shiftKey === false) {
+            event.preventDefault();
+            this.addMessage();
+        }
+    }
 
     addMessage = event => {
+        this.capMessages();
         fetch('/api/v1/messages', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 message: this.state.message,
-                author: this.state.author
+                author: this.state.author === "" ? "Anonymous" : this.state.author
             })
         })
             .then(data => data.json())
@@ -71,7 +78,22 @@ export default class Search extends Component {
         })
     }
 
+    capMessages() {
+        if (this.state.messages.length > 5) {
+            var extras = this.state.messages.splice(5, this.state.messages.length - 1);
+            extras.map(val => {
+                return fetch('/api/v1/messages/' + val._id, {
+                    method: 'DELETE'
+                })
+                .then(data => data.json())
+                .catch(error => console.log(error))
+            })
+            
+        }
+    }
+
     async getMessages() {
+        this.capMessages();
         try {
             const allMessages = [];
             const res = await fetch('/api/v1/messages')

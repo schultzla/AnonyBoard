@@ -13,7 +13,7 @@ export default class Messages extends Component {
               <div className="card-body">
                 <blockquote className="blockquote mb-0">
                   <p>{message.message}</p>
-                  <footer className="blockquote-footer">{message.author === "" ? "Anonymous" : message.author}</footer>
+                  <footer className="blockquote-footer">{message.author}</footer>
                 </blockquote>
               </div>
             </div>
