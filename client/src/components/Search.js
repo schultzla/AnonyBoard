@@ -12,23 +12,52 @@ export default class Search extends Component {
             message: "",
             author: "",
             messages: [],
-            messageError: "",
-            authorError: ""
+            messageError: null,
+            authorError: null,
+            error: true
         };
         
         this.getMessages = this.getMessages.bind(this);
     }
 
+    validateAuthor = () => {
+        const {author} = this.state;
+        if (author.match('(?!^ +$)^.+$') == null) {
+            this.setState({
+                authorError: author.length > 0 ? "Author must be 3 characters" : null
+            })
+        } else {
+            this.setState({
+                authorError: author.length > 0 ? (author.length < 3 ? 'Author must be more than 3 characters' : null) : null
+            })
+        }
+    }
+
+    validateMessage = () => {
+        const {message} = this.state;
+        if (message.match('(?!^ +$)^.+$') == null) {
+            this.setState({
+                messageError: "Message is empty",
+                error: true
+            })
+        } else {
+            this.setState({
+                messageError: message.length <= 0 ? (message.length > 140 ? 'Message must be less than 140 characters' : 'Message is empty') : null,
+                error: message.length <= 0 ? (message.length > 140 ? true: true) : false
+            })
+        }
+    }
+
     render() {
         return (
             <div className='container'>
-                <input type='text' ref={el => this.inputAuthor = el} onChange={this.updateAuthor} className={`border-0 bg-dark text-white form-control mb-2 ${this.state.authorError ? 'is-invalid' : ''}`} placeholder='Username (Optional)'></input>
+                <input type='text' ref={el => this.inputAuthor = el} onBlur={this.validateAuthor} onChange={this.updateAuthor} className={`border-0 bg-dark text-white form-control mb-2 ${this.state.authorError ? 'is-invalid' : ''}`} placeholder='Username (Optional)'></input>
                 <div className='invalid-feedback'>{this.state.authorError}</div>
 
-                <textarea ref={el => this.inputMessage = el} onChange={this.updateMessage} onKeyDown={this.onEnter} className={`border-0 bg-dark text-white form-control ${this.state.messageError ? 'is-invalid' : ''}`} type='text' rows='5' resize='none' placeholder='Message'></textarea>
+                <textarea ref={el => this.inputMessage = el} onBlur={this.validateMessage} onChange={this.updateMessage} onKeyDown={this.onEnter} className={`border-0 bg-dark text-white form-control ${this.state.messageError ? 'is-invalid' : ''}`} type='text' rows='5' resize='none' placeholder='Message'></textarea>
                 <div className='invalid-feedback'>{this.state.messageError}</div>
 
-                <button type="button" onMouseUp={this.addMessage} className="mt-2 btn btn-primary btn-sm">Submit</button>
+                <button type="button" onMouseUp={this.addMessage} disabled={this.state.error} className="mt-2 btn btn-warning btn-lg">Submit</button>
                 <Tweet messages={this.state.messages} />
             </div>
         );
@@ -42,6 +71,10 @@ export default class Search extends Component {
     }
 
     addMessage = event => {
+        if (this.state.authorError != null || this.state.messageError != null) {
+            return;
+        }
+        event.preventDefault();
         this.capMessages();
         fetch('/api/v1/messages', {
             method: 'POST',
@@ -60,22 +93,21 @@ export default class Search extends Component {
         this.inputMessage.value = "";
         this.setState({
             message: "",
-            author: ""
+            author: "",
+            error: true
         })
     }
 
     updateMessage = event => {
-        this.setState({
-            message: event.target.value,
-            messageError: ""
-        })
+        this.setState({ message: event.target.value }, () => {
+            this.validateMessage();
+          });
     }
 
     updateAuthor = event => {
-        this.setState({
-            author: event.target.value,
-            authorError: ""
-        })
+        this.setState({ author: event.target.value }, () => {
+            this.validateAuthor();
+          });
     }
 
     capMessages() {
