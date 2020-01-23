@@ -12,6 +12,16 @@ exports.message_list = function(req, res) {
     })
 };
 
+exports.get_message = function(req, res) {
+  db.Message.findOne({_id: req.params.id})
+  .then(function(dbMessage) {
+    res.json(dbMessage)
+  })
+  .catch(function(err) {
+    res.json(err)
+  })
+}
+
 exports.create_messsage = function(req, res, next) {
     try {
       const errors = validationResult(req); 
@@ -38,7 +48,9 @@ exports.validate = (method) => {
       case 'create_message': {
         console.log('validating new message')
        return [ 
-          body('message', 'message is too long').isLength({max: 140})
+          body('message', 'message is too long').isLength({max: 140}),
+          body('likes', 'likes should be 0').custom(value => value === 0),
+          body('dislikes', 'dislikes should be 0').custom(value => value === 0)
          ]   
       }
     }

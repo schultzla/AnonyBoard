@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Search.css';
-import Tweet from './Tweets';
+import Tweet from './Messages';
 
 export default class Search extends Component {
 

@@ -1,3 +1,7 @@
 textarea {
     resize: none
 }
+
+.card-body:hover{
+    background-color: #2e3338;
+}
