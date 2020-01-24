@@ -18,12 +18,8 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/', indexRouter);
 app.use('/api/v1/messages', messageRouter);
 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname + "../client/build/index.html"));
-    });
-
-const dbuser = 'anonyTweetAdmin'
-const dbpass = 'MelWykRqfkqFRSYZ'
+const dbuser = process.env.DBUSER
+const dbpass = process.env.DBPASS
 
 const mongoDB = `mongodb+srv://${dbuser}:${dbpass}@cluster0-g9bto.mongodb.net/anonyTweet?retryWrites=true&w=majority`;
 mongoose.connect(mongoDB, { useNewUrlParser: true });
