@@ -15,14 +15,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client/build')));
 
-if (process.env.PROD == true) {
+app.use('/', indexRouter);
+app.use('/api/v1/messages', messageRouter);
+
+if (process.env.PROD == "true") {
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, "../client/build/index.html"));
       });
 }
-
-app.use('/', indexRouter);
-app.use('/api/v1/messages', messageRouter);
 
 const dbuser = process.env.DBUSER
 const dbpass = process.env.DBPASS
