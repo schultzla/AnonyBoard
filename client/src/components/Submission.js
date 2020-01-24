@@ -57,7 +57,7 @@ export default class Submission extends Component {
                 <textarea ref={el => this.inputMessage = el} onBlur={this.validateMessage} onChange={this.updateMessage} onKeyDown={this.onEnter} className={`border-0 bg-dark text-white form-control ${this.state.messageError ? 'is-invalid' : ''}`} type='text' rows='5' resize='none' placeholder='Message'></textarea>
                 <div className='invalid-feedback'>{this.state.messageError}</div>
 
-                <button type="button" onMouseUp={this.addMessage} disabled={this.state.error} className="mt-2 btn btn-warning btn-lg">Submit</button>
+                <button type="button" onMouseUp={this.addMessage} disabled={this.state.error} className="mt-2 btn btn-warning btn-block">Submit</button>
                 <Tweet messages={this.state.messages} />
             </div>
         );
