@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Search from './components/Search';
+import Submission from './components/Submission';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
@@ -16,7 +16,7 @@ function App() {
           </Link>
         </div>
         <div className='container mt-3'>
-          <Search />
+          <Submission />
         </div>
       </header>
     </div>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Search.css';
+import './Submission.css';
 import { Link } from 'react-router-dom'
 
 export default class Messages extends Component {

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Search.css';
+import './Submission.css';
 import Tweet from './Messages';
 
-export default class Search extends Component {
+export default class Submission extends Component {
 
     constructor(props) {
         super(props);
