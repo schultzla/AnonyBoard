@@ -28,7 +28,7 @@ const dbuser = process.env.DBUSER
 const dbpass = process.env.DBPASS
 
 const mongoDB = `mongodb+srv://${dbuser}:${dbpass}@cluster0-g9bto.mongodb.net/anonyTweet?retryWrites=true&w=majority`;
-mongoose.connect(mongoDB, { useNewUrlParser: true });
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
