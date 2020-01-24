@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom'
 
 export default class Header extends Component {
     render() {
