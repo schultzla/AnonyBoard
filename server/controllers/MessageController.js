@@ -14,6 +14,7 @@ exports.message_list = function(req, res) {
 
 exports.get_message = function(req, res) {
   db.Message.findById(req.params.id)
+  .populate('replies')
   .then(function(dbMessage) {
     res.json(dbMessage)
   })
@@ -30,6 +31,30 @@ exports.delete_message = function(req, res) {
   .catch(function(err) {
     res.json(err)
   }) 
+}
+
+exports.create_reply = function(req, res, next) {
+  try {
+    const errors = validationResult(req); 
+
+    if (!errors.isEmpty()) {
+      console.log(errors)
+      res.status(422).json({ errors: errors.array() });
+      return;
+    }   
+    db.Reply.create(req.body)
+      .then(function(dbReply) {
+        return db.Message.findOneAndUpdate({ _id: req.params.id }, {$push: {replies: dbReply._id}}, { new: true });
+      })
+      .then(function(dbMessage) {
+        res.json(dbMessage);
+      }) 
+      .catch(function(err) {
+        res.json(err);
+    });
+  } catch(err) {
+    return next(err)
+  }
 }
 
 exports.create_messsage = function(req, res, next) {
@@ -59,6 +84,11 @@ exports.validate = (method) => {
        return [ 
           body('message', 'message is too long').isLength({max: 140})
          ]   
+      }
+      case 'create_reply': {
+        return [ 
+          body('message', 'message is too long').isLength({max: 140})
+         ] 
       }
     }
   }
