@@ -10,7 +10,7 @@ function App() {
       <header className="App-header">
         <Header/>
         <div className='container mt-3'>
-          <Submission />
+          <Submission/>
         </div>
       </header>
     </div>
