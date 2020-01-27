@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
 import Header from "./Header";
 import Reply from './Reply';
-import Submission from "./Submission";
 var ObjectId = require('mongoose').Types.ObjectId;
 
 export default class DetailedMessage extends Component {
