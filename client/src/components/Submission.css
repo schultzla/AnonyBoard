@@ -5,3 +5,7 @@ textarea {
 .card-body:hover{
     background-color: #2e3338;
 }
+
+.hidden {
+    display: none
+}

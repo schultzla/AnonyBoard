@@ -6,6 +6,8 @@ import Filter from 'bad-words';
 
 export default class Submission extends Component {
 
+    _isMounted = false;
+
     constructor(props) {
         super(props);
 
@@ -17,12 +19,12 @@ export default class Submission extends Component {
             authorError: null,
             error: false
         };
-        
+
         this.getMessages = this.getMessages.bind(this);
     }
 
     validateAuthor = () => {
-        const {author} = this.state;
+        const { author } = this.state;
         if (author.match('(?!^ +$)^.+$') == null) {
             this.setState({
                 authorError: author.length > 0 ? "Author must be 3 characters" : null
@@ -41,7 +43,7 @@ export default class Submission extends Component {
     }
 
     validateMessage = () => {
-        const {message} = this.state;
+        const { message } = this.state;
         if (message.match('(?!^ +$)^.+$') == null) {
             this.setState({
                 messageError: "Message is empty",
@@ -51,7 +53,7 @@ export default class Submission extends Component {
         } else {
             this.setState({
                 messageError: message.length <= 0 ? (message.length > 140 ? 'Message must be less than 140 characters' : 'Message is empty') : null,
-                error: message.length <= 0 ? (message.length > 140 ? true: true) : false
+                error: message.length <= 0 ? (message.length > 140 ? true : true) : false
             })
         }
 
@@ -86,7 +88,7 @@ export default class Submission extends Component {
 
     addMessage = event => {
         var valMsg = this.validateMessage();
-        var valAuth = this.validateAuthor(); 
+        var valAuth = this.validateAuthor();
         if (valMsg || valAuth) {
             return;
         }
@@ -115,7 +117,7 @@ export default class Submission extends Component {
     }
 
     updateMessage = event => {
-        this.setState({ 
+        this.setState({
             message: event.target.value,
             error: false,
             messageError: null
@@ -123,11 +125,11 @@ export default class Submission extends Component {
     }
 
     updateAuthor = event => {
-        this.setState({ 
+        this.setState({
             author: event.target.value,
             error: false,
             authorError: null
-         });
+        });
     }
 
     capMessages() {
@@ -137,32 +139,39 @@ export default class Submission extends Component {
                 return fetch('/api/v1/messages/' + val._id, {
                     method: 'DELETE'
                 })
-                .then(data => data.json())
-                .catch(error => console.log(error))
+                    .then(data => data.json())
+                    .catch(error => console.log(error))
             })
-            
+
         }
     }
 
     async getMessages() {
-        this.capMessages();
-        try {
-            const allMessages = [];
-            const res = await fetch('/api/v1/messages')
-            const data = await res.json();
-            allMessages.push(...data);
-            allMessages.sort((a, b) => (a.time > b.time ? 1 : -1));
+        if (this._isMounted) {
+            this.capMessages();
+            try {
+                const allMessages = [];
+                const res = await fetch('/api/v1/messages')
+                const data = await res.json();
+                allMessages.push(...data);
+                allMessages.sort((a, b) => (a.time > b.time ? 1 : -1));
 
-            this.setState({
-                messages: allMessages
-            })
-        } catch (e) {
-            console.log(e);
+                this.setState({
+                    messages: allMessages
+                })
+            } catch (e) {
+                console.log(e);
+            }
         }
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.getMessages();
         setInterval(this.getMessages, 5000)
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 }

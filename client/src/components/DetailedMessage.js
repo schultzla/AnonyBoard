@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
+import '../components/Submission.css'
 import Header from "./Header";
 import Reply from './Reply';
 var ObjectId = require('mongoose').Types.ObjectId;
@@ -58,14 +59,14 @@ export default class DetailedMessage extends Component {
                   <div className="card-body">
                     <blockquote className="blockquote mb-0">
                       <p>{this.state.message}</p>
-                      <footer className="blockquote-footer">{this.state.author}</footer>
+                      <footer className={`${this.state.message === "Invalid message ID" ? 'hidden' : ''} blockquote-footer`}>{this.state.author}</footer>
                     </blockquote>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <Reply id={this.props.match.params.id}/>
+          <Reply shouldHide={this.state.message === "Invalid message ID"} id={this.props.match.params.id}/>
         </header>
       </div>
 
