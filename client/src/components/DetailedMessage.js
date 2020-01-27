@@ -66,7 +66,7 @@ export default class DetailedMessage extends Component {
               </div>
             </div>
           </div>
-          <Reply shouldHide={this.state.message === "Invalid message ID"} id={this.props.match.params.id}/>
+          <Reply hidden={this.state.message === "Invalid message ID" ? 'hidden' : ''} id={this.props.match.params.id}/>
         </header>
       </div>
 

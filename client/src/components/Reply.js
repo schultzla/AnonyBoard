@@ -143,13 +143,13 @@ export default class Reply extends Component {
     render() {
         return (
             <div className='container'>
-                <input type='text' ref={el => this.inputAuthor = el} onChange={this.updateAuthor} className={`${this.props.shouldHide === true ? 'hidden' : ''} border-0 bg-dark text-white form-control mb-2 ${this.state.authorError ? 'is-invalid' : ''}`} placeholder='Username (Optional)'></input>
+                <input type='text' ref={el => this.inputAuthor = el} onChange={this.updateAuthor} className={`${this.props.hidden} border-0 bg-dark text-white form-control mb-2 ${this.state.authorError ? 'is-invalid' : ''}`} placeholder='Username (Optional)'></input>
                 <div className='invalid-feedback'>{this.state.authorError}</div>
 
-                <textarea ref={el => this.inputMessage = el} onChange={this.updateMessage} onKeyDown={this.onEnter} className={`${this.props.shouldHide === true ? 'hidden' : ''} border-0 bg-dark text-white form-control ${this.state.messageError ? 'is-invalid' : ''}`} type='text' rows='5' resize='none' placeholder='Message'></textarea>
+                <textarea ref={el => this.inputMessage = el} onChange={this.updateMessage} onKeyDown={this.onEnter} className={`${this.props.hidden} border-0 bg-dark text-white form-control ${this.state.messageError ? 'is-invalid' : ''}`} type='text' rows='5' resize='none' placeholder='Message'></textarea>
                 <div className='invalid-feedback'>{this.state.messageError}</div>
 
-                <button type="button" onMouseUp={this.addReply} disabled={this.state.error} className={`${this.props.shouldHide === true ? 'hidden' : ''} mt-2 btn btn-warning btn-block`}>Reply</button>
+                <button type="button" onMouseUp={this.addReply} disabled={this.state.error} className={`${this.props.hidden} mt-2 btn btn-warning btn-block`}>Reply</button>
                 <Replies messages={this.state.replies} />
 
             </div>
