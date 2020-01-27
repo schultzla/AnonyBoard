@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Submission.css';
 import Messages from './Messages';
+import Filter from 'bad-words';
 
 export default class Submission extends Component {
 
@@ -90,12 +91,13 @@ export default class Submission extends Component {
             return;
         }
 
+        var filter = new Filter()
         fetch('/api/v1/messages', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                message: this.state.message,
-                author: this.state.author === "" ? "Anonymous" : this.state.author
+                message: filter.clean(this.state.message),
+                author: this.state.author === "" ? "Anonymous" : filter.clean(this.state.author)
             })
         })
             .then(data => data.json())
