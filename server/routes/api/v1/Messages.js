@@ -11,9 +11,9 @@ messagesRouter.route('/')
 messagesRouter.route('/:id')
     .get(message_controller.get_message)
     .delete(message_controller.delete_message) 
-
+    
 messagesRouter.route('/replies/:id')
-    .get(message_controller.get_message)
+    .get(message_controller.get_reply)
     .post(message_controller.validate('create_reply'), message_controller.create_reply);
 
 module.exports = messagesRouter;

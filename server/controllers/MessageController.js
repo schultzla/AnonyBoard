@@ -33,6 +33,16 @@ exports.delete_message = function(req, res) {
   }) 
 }
 
+exports.get_reply = function(req, res) {
+  db.Reply.findById(req.params.id)
+  .then(function(dbReply) {
+    res.json(dbReply)
+  })
+  .catch(function(err) {
+    res.json(err)
+  })
+}
+
 exports.create_reply = function(req, res, next) {
   try {
     const errors = validationResult(req); 
@@ -47,8 +57,16 @@ exports.create_reply = function(req, res, next) {
         return db.Message.findOneAndUpdate({ _id: req.params.id }, {$push: {replies: dbReply._id}}, { new: true });
       })
       .then(function(dbMessage) {
-        res.json(dbMessage);
-      }) 
+        db.Message.findById(req.params.id)
+        .populate('replies')
+        .then(function(dbMessage) {
+          res.json(dbMessage)
+        })
+        .catch(function(err) {
+          res.json(err)
+        })
+      
+      })
       .catch(function(err) {
         res.json(err);
     });

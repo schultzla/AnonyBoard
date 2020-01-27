@@ -66,7 +66,7 @@ export default class DetailedMessage extends Component {
               </div>
             </div>
           </div>
-          <Reply/>
+          <Reply id={this.props.match.params.id}/>
         </header>
       </div>
 

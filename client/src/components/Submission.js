@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Submission.css';
-import Tweet from './Messages';
+import Messages from './Messages';
 
 export default class Submission extends Component {
 
@@ -71,7 +71,7 @@ export default class Submission extends Component {
                 <div className='invalid-feedback'>{this.state.messageError}</div>
 
                 <button type="button" onMouseUp={this.addMessage} disabled={this.state.error} className="mt-2 btn btn-warning btn-block">Submit</button>
-                <Tweet messages={this.state.messages} />
+                <Messages messages={this.state.messages} />
             </div>
         );
     }
@@ -129,8 +129,8 @@ export default class Submission extends Component {
     }
 
     capMessages() {
-        if (this.state.messages.length > 5) {
-            var extras = this.state.messages.splice(5, this.state.messages.length - 1);
+        if (this.state.messages.length > 25) {
+            var extras = this.state.messages.splice(25, this.state.messages.length - 1);
             extras.map(val => {
                 return fetch('/api/v1/messages/' + val._id, {
                     method: 'DELETE'
