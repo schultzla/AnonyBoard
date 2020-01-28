@@ -17,7 +17,7 @@ export default class Messages extends Component {
                 id: message._id
               }
             }}>
-              <div className="card-body">
+              <div className="card-body linkable-card">
                 <blockquote className="blockquote mb-0">
                   <p>{message.message}</p>
                   <footer className="blockquote-footer">{message.author}</footer>

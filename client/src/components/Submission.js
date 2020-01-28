@@ -67,10 +67,10 @@ export default class Submission extends Component {
     render() {
         return (
             <div className='container'>
-                <input type='text' ref={el => this.inputAuthor = el} onChange={this.updateAuthor} className={`border-0 bg-dark text-white form-control mb-2 ${this.state.authorError ? 'is-invalid' : ''}`} placeholder='Username (Optional)'></input>
+                <input type='text' ref={el => this.inputAuthor = el} onChange={this.updateAuthor} className={`highlight border-0 bg-dark text-white form-control mb-2 ${this.state.authorError ? 'is-invalid' : ''}`} placeholder='Username (Optional)'></input>
                 <div className='invalid-feedback'>{this.state.authorError}</div>
 
-                <textarea ref={el => this.inputMessage = el} onChange={this.updateMessage} onKeyDown={this.onEnter} className={`border-0 bg-dark text-white form-control ${this.state.messageError ? 'is-invalid' : ''}`} type='text' rows='5' resize='none' placeholder='Message'></textarea>
+                <textarea ref={el => this.inputMessage = el} onChange={this.updateMessage} onKeyDown={this.onEnter} className={`highlight border-0 bg-dark text-white form-control ${this.state.messageError ? 'is-invalid' : ''}`} type='text' rows='5' resize='none' placeholder='Message'></textarea>
                 <div className='invalid-feedback'>{this.state.messageError}</div>
 
                 <button type="button" onMouseUp={this.addMessage} disabled={this.state.error} className="mt-2 btn btn-warning btn-block">Submit</button>

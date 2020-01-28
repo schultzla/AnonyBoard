@@ -2,10 +2,15 @@ textarea {
     resize: none
 }
 
-.card-body:hover{
+.linkable-card:hover{
     background-color: #2e3338;
 }
 
 .hidden {
     display: none
+}
+
+.highlight:focus {
+    outline: none !important;
+    box-shadow: 0 0 5px #fec02f;
 }
