@@ -1,9 +1,16 @@
 import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Submission.css';
+import moment from 'moment';
 
 export default class Messages extends Component {
-  
+
+  date = (messageDate) => {
+    var end = moment();
+    var start = moment(messageDate);
+    return start.from(end);
+  }
+
   render() {
     return (
       <div className='mt-5 mb-5'>
@@ -13,7 +20,9 @@ export default class Messages extends Component {
               <div className="card-body">
                 <blockquote className="blockquote mb-0">
                   <p>{message.message}</p>
-                  <footer className="blockquote-footer">{message.author}</footer>
+                  <h5>
+                    <small className='text-muted'>{this.date(message.date)} from {message.author}</small>
+                  </h5>
                 </blockquote>
               </div>
             </div>
