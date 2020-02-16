@@ -35,8 +35,8 @@ export default class Reply extends Component {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                message: filter(this.state.message),
-                author: this.state.author === "" ? "Anonymous" : filter(this.state.author)
+                message: filter.clean(this.state.message),
+                author: this.state.author === "" ? "Anonymous" : filter.clean(this.state.author)
             })
         })
             .then(data => data.json())
