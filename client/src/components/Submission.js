@@ -132,23 +132,8 @@ export default class Submission extends Component {
         });
     }
 
-    capMessages() {
-        if (this.state.messages.length > 25) {
-            var extras = this.state.messages.splice(25, this.state.messages.length - 1);
-            extras.map(val => {
-                return fetch('/api/v1/messages/' + val._id, {
-                    method: 'DELETE'
-                })
-                    .then(data => data.json())
-                    .catch(error => console.log(error))
-            })
-
-        }
-    }
-
     async getMessages() {
         if (this._isMounted) {
-            this.capMessages();
             try {
                 const allMessages = [];
                 const res = await fetch('/api/v1/messages')
